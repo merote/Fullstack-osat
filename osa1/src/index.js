@@ -28,7 +28,7 @@ const Part = (props) => {
 
 const Total = (props) => {
     return (
-        <h1>{props.total}</h1>
+        <p>Number of exercises {props.total}</p>
     )
 }
 
