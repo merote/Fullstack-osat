@@ -51,8 +51,6 @@ const App = () => {
         ]
     }
 
-    //const parts = [part1, part2, part3]
-    //const exercises = [exercises1, exercises2, exercises3]  
 
     return (
         <div>
