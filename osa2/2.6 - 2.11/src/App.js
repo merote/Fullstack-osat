@@ -21,32 +21,20 @@ const App = () => {
 
 
   const handleNameChange = (event) => {
-    console.log(event.target.value)
     setNewName(event.target.value)
   }
 
   const handleNumberChange = (event) => {
-    console.log(event.target.value) 
     setNewNumber(event.target.value)
   }
   
   const handleFilterChange = (event) => {
-    console.log(event.target.value)
     setNewFilter(event.target.value)
-    console.log(newFilter)
   }
 
   const addContact = (event) => {
     event.preventDefault()
-    if (persons.map(a => a.name).includes(newName) === true) {
-      console.log("löyty")
-      window.alert(`${newName} is already added to phonebook`)
-      return
-    }
-    console.log(newName)
     setPersons([...persons, {name: newName, number: newNumber}])   
-    console.log(event.target)
-    console.log(persons)
   }
   
   return (
@@ -56,7 +44,7 @@ const App = () => {
       <h2>Add new</h2>
       <PersonForm name={newName} changeName={handleNameChange}
         number={newNumber} changeNumber={handleNumberChange}
-        submit={addContact}>
+        submit={addContact} filter={newFilter} persons={persons}>
       </PersonForm>
       <h2>Numbers</h2>
       <Persons persons={persons} newFilter={newFilter} ></Persons>

@@ -1,9 +1,11 @@
 import React from 'react'
 
 const PersonForm = (props) => {
-  console.log(props)
+
   return (
-    <form onSubmit={props.submit}>
+    <form onSubmit={props.persons.map(a => a.name).includes(props.name) === true
+      ? () => window.alert(`${props.name} is already added to phonebook`) 
+      : props.submit}>
     <div>
     name: <input
       value={props.Name}
