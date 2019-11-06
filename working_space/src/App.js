@@ -3,12 +3,12 @@ import React, { useState, useEffect } from 'react'
 
 const Filter = (props) => {
   return (
-    <div>
+    <p>
       Find countries: <input
         onChange={props.onChange}
         value={props.newFilter}
       />
-    </div>
+    </p>
   )
 }
 
@@ -45,21 +45,54 @@ const Country = ({country}) => {
   return (
     <div>
       <h1>{country.name}</h1>
-      <div>{country.capital} </div>
-      <div>{country.population} </div>
+      <div>capital {country.capital} </div>
+      <div>population {country.population} </div>
       <h2>languages</h2>
       <ul>
         {country.languages.map((language, index) =>
           <li key={index}>{language.name}</li>)}
       </ul>
       <img src ={country.flag} alt="flag" height="100" width="100"></img>
+      <Weather capital = {country.capital}></Weather>    
     </div>
   )
+}
+
+const Weather = ({capital}) => {
+  
+  const [weather, setWeather] = useState({temperature:'', wind_speed:'',wind_direction:'', icon:''})
+
+  
+useEffect(() => {
+    axios
+      .get(`http://api.weatherstack.com/current?access_key=a3715b4be664170eb8f117481187edad&query=${capital}`)
+      .then(response => {
+        const data = response.data.current
+        console.log(data)
+        setWeather({temperature: data.temperature, wind_speed:data.wind_speed,
+            wind_direction: data.wind_dir, icon: data.weather_icons[0]})
+        //console.log(weather)
+      })
+  }, [])
+
+
+
+  console.log(weather)
+  
+  return (
+    <div>
+      <h2>Weather in {capital} </h2>
+      <p><b>temperature:</b> {weather.temperature} Celsius</p>
+      <img src ={weather.icon} alt="wind" height="50" width="50"></img>
+      <p><b>wind:</b> {weather.wind_speed} kph direction {weather.wind_direction} </p>
+    </div>
+  ) 
 }
 
 const App = () => {
   const [countries, setCountries] = useState([])
   const [newFilter, setNewFilter] = useState('')
+  //const [weather, setWeather] = useState([])
 
   useEffect(() => {
     axios
@@ -69,7 +102,7 @@ const App = () => {
       })
   }, [])
 
-  console.log(countries)
+
 
   const handleFilterChange = (event) => {
     console.log(event.target.value)
@@ -82,14 +115,13 @@ const App = () => {
     setNewFilter(name)     
   }
 
-
-
   return (
     <div>
       <Filter value={newFilter} onChange={handleFilterChange}></Filter>
       <Countries countries={countries} newFilter={newFilter} 
                   showCountry = {showCountry}>           
       </Countries>
+      {}
     </div>
   )
 
