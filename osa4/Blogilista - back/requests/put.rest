@@ -1,0 +1,9 @@
+PUT http://localhost:3001/api/blogs/5dd587b2ad4f8a3fac713a6f
+Content-Type: application/json
+
+{
+  "title": "Thanos222",
+  "author": "951958051",
+  "url": "www.fi",
+  "likes": 554
+}
